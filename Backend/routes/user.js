@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 const routes = express.Router();
@@ -52,9 +53,11 @@ routes.post('/login', (req, res, next) => {
                         message: 'Auth failed'
                     });
                 }
+                const token = jwt.sign({id: userData._id, email: userData.email},"this_is_super_long_key",{expiresIn:'1h'});
                 res.status(200).json({
                     rc: '0',
-                    message: "Authenticated successfully"
+                    message: "Authenticated successfully",
+                    token: token
                 });
             }).catch(err => {
                 res.status(200).json({
