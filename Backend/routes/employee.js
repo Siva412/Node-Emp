@@ -47,11 +47,17 @@ router.post("/action", (req, res, next) => {
                     message: 'Deleted successfully'
                 });
             }
+            else{
+                res.status(200).json({
+                    rc: '2',
+                    message: "Unable to delete"
+                }); 
+            }
         }).catch(err => {
             res.status(200).json({
                 rc: '2',
                 message: "Sorry something went wrong"
-            })
+            });
         });
     }
     else if(req.body.action === 'edit'){
@@ -70,11 +76,17 @@ router.post("/action", (req, res, next) => {
                     message: 'Modified successfully'
                 });
             }
+            else{
+                res.status(200).json({
+                    rc: '2',
+                    message: "No modified details found"
+                });
+            }
         }).catch(err => {
             res.status(200).json({
                 rc: '2',
                 message: "Sorry something went wrong"
-            })
+            });
         });
     }
     else{
